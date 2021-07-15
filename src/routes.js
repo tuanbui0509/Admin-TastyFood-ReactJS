@@ -11,8 +11,7 @@ const routes = [
         path: '/',
         exact: true,
         main: () => <DashboardPage />
-    }
-    , 
+    } , 
     {
         path: '/admin/view-products',
         exact: false,

@@ -1,69 +1,170 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 
+const menus = [
+    {
+        label: 'Dashboard',
+        to: '/',
+        exact: true,
+        submenu: []
+    },
+    {
+        label: 'Sản phẩm',
+        to: '/admin/view-products',
+        exact: false,
+        submenu: [
+            {
+                label: "Chèn sản phẩm",
+                to: '/admin/insert-product',
+                exact: false
+            },
+            {
+                label: "Xem sản phẩm",
+                to: '/admin/view-product',
+                exact: false
+            }
+        ]
+    },
+    {
+        label: 'Danh mục sản phẩm',
+        to: '/admin/view-',
+        exact: false,
+        submenu: [
+            {
+                label: "Chèn danh mục",
+                to: '/admin/insert-product',
+                exact: false
+            },
+            {
+                label: "Xem danh mục",
+                to: '/admin/view-products',
+                exact: false
+            }
+        ]
+    },
+    {
+        label: 'Coupons',
+        to: '/admin/view-coupons',
+        exact: false,
+        submenu: [
+            {
+                label: "Chèn coupons",
+                to: '/admin/insert-product',
+                exact: false
+            },
+            {
+                label: "Xem coupons",
+                to: '/admin/view-products',
+                exact: false
+            }
+        ]
+    },
+    {
+        label: 'Quản lý Admin',
+        to: '/admin/view-',
+        exact: false,
+        submenu: [
+            {
+                label: "Chèn Admin",
+                to: '/admin/insert-product',
+                exact: false
+            },
+            {
+                label: "Xem Admin",
+                to: '/admin/view-products',
+                exact: false
+            }
+        ]
+    },
+    {
+        label: 'Khách hàng',
+        to: '/admin/view-customers',
+        exact: false,
+        submenu: []
+    },
+    {
+        label: 'Đơn đặt hàng',
+        to: '/admin/view-orders',
+        exact: false,
+        submenu: []
+    }, {
+        label: 'Đăng xuất',
+        to: '/',
+        exact: false,
+        submenu: []
+    },
+]
+// custom Link
+const MenuLink = ({ label, to, activeOnlyWhenExact, submenu }) => {
+    return (
+        <Route
+            path={to}
+            exact={activeOnlyWhenExact}
+            children={({ match }) => {
+                let arr = [];
+                arr = submenu.map((sub, index) => {
+                    return <Link key={index} className="left__link" to={sub.to}>{sub.label}</Link>
+                })
+                if (arr.length === 0) {
+                    return (
+                        <li className="left__menuItem">
+                            <Link to={to} className="left__title">
+                                {label}
+                            </Link>
+                        </li>
+                    )
+                }
+                else {
+                    return (
+                        <li className="left__menuItem">
+                            <div className="left__title">
+                                {label}
+                                <img className="left__iconDown" src="/assets/arrow-down.svg" alt />
+                            </div>
+                            <div className="left__text">
+                                {arr}
+                            </div>
+                        </li>
+                    )
+                }
+
+            }}
+        />
+    );
+}
+
+const showMenus = (menus) => {
+    let result = null;
+    if (menus.length > 0) {
+        result = menus.map((menu, index) => {
+            return (
+                <MenuLink
+                    key={index}
+                    label={menu.label}
+                    to={menu.to}
+                    activeOnlyWhenExact={menu.exact}
+                    submenu={menu.submenu}
+                />
+            );
+        })
+    }
+    return result;
+}
 export default function MenuSidebar() {
     return (
 
         <div className="left">
             <span className="left__icon">
-                <span />
-                <span />
-                <span />
+                
             </span>
             <div className="left__content">
-                <div className="left__logo">LOGO</div>
                 <div className="left__profile">
                     <div className="left__image"><img src="/assets/profile1.jpg" alt /></div>
                     <p className="left__name">Bùi Ngọc Tuấn</p>
                 </div>
                 <ul className="left__menu">
-                    <li className="left__menuItem">
-                        <Link to="/" className="left__title"><img src="/assets/icon-dashboard.svg" alt />Dashboard</Link>
-                    </li>
-                    <li className="left__menuItem">
-                        <div className="left__title"><img src="/assets/icon-tag.svg" alt />Sản Phẩm<img className="left__iconDown" src="/assets/arrow-down.svg" alt /></div>
-                        <div className="left__text">
-                            <Link className="left__link" to="/admin/insert-product">Chèn Sản Phẩm</Link>
-                            <Link className="left__link" to="/admin/view-product">Xem Sản Phẩm</Link>
-                        </div>
-                    </li>
-                    <li className="left__menuItem">
-                        <div className="left__title"><img src="/assets/icon-edit.svg" alt />Danh Mục SP<img className="left__iconDown" src="/assets/arrow-down.svg" alt /></div>
-                        <div className="left__text">
-                            <Link className="left__link" to="/admin/insert-category">Chèn Danh Mục</Link>
-                            <Link className="left__link" to="/admin/view-p_category">Xem Danh Mục</Link>
-                        </div>
-                    </li>
-                    {/* <li className="left__menuItem">
-                        <div className="left__title"><img src="/assets/icon-settings.svg" alt />Slide<img className="left__iconDown" src="/assets/arrow-down.svg" alt /></div>
-                        <div className="left__text">
-                            <Link className="left__link" to="/admin/insert-slide">Chèn Slide</Link>
-                            <Link className="left__link" to="/admin/view-slides">Xem Slide</Link>
-                        </div>
-                    </li> */}
-                    <li className="left__menuItem">
-                        <div className="left__title"><img src="/assets/icon-book.svg" alt />Coupons<img className="left__iconDown" src="/assets/arrow-down.svg" alt /></div>
-                        <div className="left__text">
-                            <Link className="left__link" to="/admin/insert-coupon">Chèn Coupon</Link>
-                            <Link className="left__link" to="/admin/view-coupons">Xem Coupons</Link>
-                        </div>
-                    </li>
-                    <li className="left__menuItem">
-                        <Link to="/admin/view-customers" className="left__title"><img src="/assets/icon-users.svg" alt />Khách Hàng</Link>
-                    </li>
-                    <li className="left__menuItem">
-                        <Link to="/admin/view-orders" className="left__title"><img src="/assets/icon-book.svg" alt />Đơn Đặt Hàng</Link>
-                    </li>
-                    <li className="left__menuItem">
-                        <div className="left__title"><img src="/assets/icon-user.svg" alt />Admin<img className="left__iconDown" src="/assets/arrow-down.svg" alt /></div>
-                        <div className="left__text">
-                            <Link className="left__link" to="/admin/insert-admin">Chèn Admin</Link>
-                            <Link className="left__link" to="/admin/view-admins">Xem Admins</Link>
-                        </div>
-                    </li>
-                    <li className="left__menuItem">
-                        <Link to className="left__title"><img src="/assets/icon-logout.svg" alt />Đăng Xuất</Link>
-                    </li>
+                    {showMenus(menus)}
+
                 </ul>
             </div>
         </div>
