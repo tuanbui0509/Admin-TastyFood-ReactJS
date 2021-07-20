@@ -89,11 +89,17 @@ const menus = [
         submenu: []
     }, {
         label: 'Đăng xuất',
-        to: '/',
+        to: '/admin/login',
         exact: false,
         submenu: []
     },
 ]
+
+function onLogout(to){
+    if(to === '/admin/login'){
+        console.log('okie');
+    }
+}
 // custom Link
 const MenuLink = ({ label, to, activeOnlyWhenExact, submenu }) => {
     return (
@@ -103,16 +109,14 @@ const MenuLink = ({ label, to, activeOnlyWhenExact, submenu }) => {
             children={({ match }) => {
                 let arr = [];
                 arr = submenu.map((sub, index) => {
-                    return <Link key={index} className="left__link" to={sub.to}>{sub.label}</Link>
+                    return <Link key={index} className="left__link" to={sub.to} >{sub.label}</Link>
                 })
                 if (arr.length === 0) {
-                    return (
-                        <li className="left__menuItem">
-                            <Link to={to} className="left__title">
-                                {label}
-                            </Link>
-                        </li>
-                    )
+                    return (<li className="left__menuItem">
+                        <Link to={to} className="left__title" onClick = {onLogout(to)}>
+                            {label}
+                        </Link>
+                    </li>)
                 }
                 else {
                     return (
@@ -155,7 +159,7 @@ export default function MenuSidebar() {
 
         <div className="left">
             <span className="left__icon">
-                
+
             </span>
             <div className="left__content">
                 <div className="left__profile">
@@ -164,7 +168,6 @@ export default function MenuSidebar() {
                 </div>
                 <ul className="left__menu">
                     {showMenus(menus)}
-
                 </ul>
             </div>
         </div>

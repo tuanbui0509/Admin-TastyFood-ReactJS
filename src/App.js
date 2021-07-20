@@ -2,21 +2,30 @@ import React from 'react'
 import MenuSidebar from './Components/MenuSidebar/MenuSidebar'
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import routes from './routes'
-
+import {useSelector} from 'react-redux'
+import LoginPage from './Pages/LoginPage/LoginPage';
 
 function App() {
+  const token = useSelector(state => state.isToken)
+  console.log(token);
   return (
     <Router>
       <div className="wrapper">
-        <div className="container">
-          <div className="dashboard">
+        <div className="container"> 
+
+        { token? <div className="dashboard">
             <MenuSidebar />
             <div className="right">
               <div className="right__content">
-                {showContentMenus(routes)}
+                {
+                  showContentMenus(routes)
+                }
               </div>
             </div>
-          </div>
+          </div>:<Route path="/admin/login" exact component={LoginPage} >
+          </Route>
+          }
+          
         </div>
       </div>
     </Router>
@@ -35,6 +44,8 @@ const showContentMenus = (routes) => {
       />
     })
   }
-  return <Switch>{result}</Switch>
+
+  return <Switch>{result}
+  </Switch>
 }
 export default App;
