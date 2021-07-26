@@ -1,50 +1,45 @@
-import React from 'react'
-
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import CustomerItem from '../../Components/CustomerItem/CustomerItem'
+import CustomerList from '../../Components/CustomerList/CustomerList'
+import apiCaller from '../../Utils/apiCaller'
 export default function ViewCustomersPage() {
+    const customers = useSelector(state => state.customers )
+    const dispatch = useDispatch()
+    const history = useHistory();
+
+    const fetchP = async () => {
+        try {
+            const res = await apiCaller('Users ', 'GET', null);
+            // console.log(res.data);
+            dispatch({ type: 'FETCH_USERS', customers: res.data })
+        } catch (err) {
+
+        }
+    }
+    useEffect(() => {
+        fetchP()
+    }, [])
+    console.log(customers);
+    const showCustomer = () => {
+        let result = null
+        if (customers.length > 0) {
+            result = customers.map((customer, index) => {
+                return (
+                    <CustomerItem
+                        key={index}
+                        customer={customer}
+                        index={index}
+                    />
+                )
+            })
+        }
+        return result
+    }
     return (
         <>
-            <div>
-                <div className="right__title">Bảng điều khiển</div>
-                <p className="right__desc">Xem sản phẩm</p>
-                <div className="right__table">
-                    <div className="right__tableWrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th style={{ textAlign: 'center' }}>Hình ảnh</th>
-                                    <th>Tên</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Xoá</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td data-label="STT">1</td>
-                                    <td data-label="Hình ảnh" style={{ textAlign: 'center' }}><img style={{ width: 50, height: 50, borderRadius: '100%', objectFit: 'cover' }} src="/assets/profile1.jpg" alt /></td>
-                                    <td data-label="Tên">dangthimydung</td>
-                                    <td data-label="Email">dangthimydung@gmail.com</td>
-                                    <td data-label="Phone">0836730193</td>
-                                    <td data-label="Địa chỉ">Cà Mau</td>
-                                    <td data-label="Xoá" className="right__iconTable"><a href><img src="/assets/icon-trash-black.svg" alt /></a></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="STT">1</td>
-                                    <td data-label="Hình ảnh" style={{ textAlign: 'center' }}><img style={{ width: 50, height: 50, borderRadius: '100%', objectFit: 'cover' }} src="/assets/profile.jpg" alt /></td>
-                                    <td data-label="Tên">chibaosinger</td>
-                                    <td data-label="Email">chibaosinger@gmail.com</td>
-                                    <td data-label="Phone">0836730193</td>
-                                    <td data-label="Địa chỉ">Cà Mau</td>
-                                    <td data-label="Xoá" className="right__iconTable"><a href><img src="/assets/icon-trash-black.svg" alt /></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
+            <CustomerList >{showCustomer()}</CustomerList>
         </>
     )
 }

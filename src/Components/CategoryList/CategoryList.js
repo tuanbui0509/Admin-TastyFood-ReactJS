@@ -1,21 +1,18 @@
 import React from 'react'
-export default function ProductList(props) {
+
+function CategoryList(props) {
     return (
         <div>
             <div className="right__title">Bảng điều khiển</div>
-            <p className="right__desc">Xem sản phẩm</p>
+            <p className="right__desc">Xem danh mục</p>
             <div className="right__table">
                 <div className="right__tableWrapper">
                     <table>
                         <thead>
                             <tr>
                                 <th>STT</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Hình ảnh</th>
-                                <th>Giá SP</th>
-                                <th>Đã bán</th>
-                                <th>Số Lượng Tồn</th>
-                                <th>Thời gian</th>
+                                <th>Tiêu đề</th>
+                                <th>Mô tả</th>
                                 <th>Sửa</th>
                                 <th>Xoá</th>
                             </tr>
@@ -29,3 +26,5 @@ export default function ProductList(props) {
         </div>
     )
 }
+
+export default CategoryList

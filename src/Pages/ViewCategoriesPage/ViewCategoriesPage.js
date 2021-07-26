@@ -1,44 +1,45 @@
-import React from 'react'
-
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import CategoryItem from '../../Components/CategoryItem/CategoryItem'
+import CategoryList from '../../Components/CategoryList/CategoryList'
+import apiCaller from '../../Utils/apiCaller'
 export default function ViewCategoriesPage() {
+    const categories = useSelector(state => state.categories )
+    const dispatch = useDispatch()
+    const history = useHistory();
+
+    const fetchP = async () => {
+        try {
+            const res = await apiCaller('categories ', 'GET', null);
+            // console.log(res.data);
+            dispatch({ type: 'FETCH_CATEGORIES', categories: res.data })
+        } catch (err) {
+
+        }
+    }
+    useEffect(() => {
+        fetchP()
+    }, [])
+    console.log(categories);
+    const showCategory = () => {
+        let result = null
+        if (categories.length > 0) {
+            result = categories.map((category, index) => {
+                return (
+                    <CategoryItem
+                        key={index}
+                        category={category}
+                        index={index}
+                    />
+                )
+            })
+        }
+        return result
+    }
     return (
         <>
-            <div>
-                <div className="right__title">Bảng điều khiển</div>
-                <p className="right__desc">Xem danh mục</p>
-                <div className="right__table">
-                    <div className="right__tableWrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tiêu đề</th>
-                                    <th>Mô tả</th>
-                                    <th>Sửa</th>
-                                    <th>Xoá</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td data-label="STT">1</td>
-                                    <td data-label="Tiêu đề">Dress</td>
-                                    <td data-label="Mô tả">Thiết kế nhẹ nhàng, trẻ trung và lãng đãng!</td>
-                                    <td data-label="Sửa" className="right__iconTable"><a href><img src="/assets/icon-edit.svg" alt /></a></td>
-                                    <td data-label="Xoá" className="right__iconTable"><a href><img src="/assets/icon-trash-black.svg" alt /></a></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="STT">2</td>
-                                    <td data-label="Tiêu đề">Top + Skirt</td>
-                                    <td data-label="Mô tả">Thiết kế nhẹ nhàng, trẻ trung và lãng đãng!</td>
-                                    <td data-label="Sửa" className="right__iconTable"><a href><img src="/assets/icon-edit.svg" alt /></a></td>
-                                    <td data-label="Xoá" className="right__iconTable"><a href><img src="/assets/icon-trash-black.svg" alt /></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
+            <CategoryList >{showCategory()}</CategoryList>
         </>
     )
 }

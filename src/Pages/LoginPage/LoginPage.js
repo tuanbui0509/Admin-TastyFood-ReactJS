@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { UseState } from 'react-redux'
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', 
+        width: '100%',
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -33,8 +35,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 export default function LoginPage() {
+    const [formData, setFormData] = useState({
+        userName: '',
+        password: ''
+    })
+
     const classes = useStyles();
-    return (
+    function onHandleSubmit(e) {
+        e.preventDefault();
+        console.log(formData);
+    } return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
@@ -42,9 +52,9 @@ export default function LoginPage() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Admin
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} Validate onSubmit={onHandleSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -55,6 +65,8 @@ export default function LoginPage() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        value={formData.userName}
+                        onChange={(e) => setFormData({ ...formData, userName: e.target.value })}
                     />
                     <TextField
                         variant="outlined"
@@ -66,11 +78,10 @@ export default function LoginPage() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        value={formData.password}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
+
                     <Button
                         type="submit"
                         fullWidth
@@ -80,23 +91,14 @@ export default function LoginPage() {
                     >
                         Sign In
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
-                    </Grid>
+
                 </form>
             </div>
             <Box mt={8}>
             </Box>
         </Container>
     );
+
 }
+
 

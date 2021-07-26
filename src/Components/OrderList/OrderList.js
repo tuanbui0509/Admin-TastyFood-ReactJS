@@ -1,23 +1,25 @@
 import React from 'react'
-export default function ProductList(props) {
+
+function OrderList(props) {
     return (
-        <div>
+        <>
             <div className="right__title">Bảng điều khiển</div>
-            <p className="right__desc">Xem sản phẩm</p>
+            <p className="right__desc">Xem đơn hàng</p>
             <div className="right__table">
                 <div className="right__tableWrapper">
                     <table>
                         <thead>
                             <tr>
                                 <th>STT</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Hình ảnh</th>
-                                <th>Giá SP</th>
-                                <th>Đã bán</th>
-                                <th>Số Lượng Tồn</th>
-                                <th>Thời gian</th>
-                                <th>Sửa</th>
+                                <th>Số hoá đơn</th>
+                                <th>Email</th>
+                                <th>Tên người mua</th>
+                                <th>Địa chỉ</th>
+                                <th>Ngày Đặt</th>
+                                {/* <th>Số điện thoại</th> */}
+                                <th>Trạng thái</th>
                                 <th>Xoá</th>
+                                <th>Thanh toán</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,6 +28,8 @@ export default function ProductList(props) {
                     </table>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
+
+export default OrderList

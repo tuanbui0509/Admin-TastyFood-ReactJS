@@ -2,7 +2,7 @@ import React from 'react'
 import MenuSidebar from './Components/MenuSidebar/MenuSidebar'
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import routes from './routes'
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 import LoginPage from './Pages/LoginPage/LoginPage';
 
 function App() {
@@ -11,21 +11,23 @@ function App() {
   return (
     <Router>
       <div className="wrapper">
-        <div className="container"> 
+        <div className="container">
 
-        { token? <div className="dashboard">
-            <MenuSidebar />
-            <div className="right">
-              <div className="right__content">
-                {
-                  showContentMenus(routes)
-                }
+          {token ?
+            <div className="dashboard">
+              <MenuSidebar />
+              <div className="right">
+                <div className="right__content">
+                  {
+                    showContentMenus(routes)
+                  }
+                </div>
               </div>
             </div>
-          </div>:<Route path="/admin/login" exact component={LoginPage} >
-          </Route>
+            : <Route path="/admin/login" exact component={LoginPage} >
+            </Route>
           }
-          
+
         </div>
       </div>
     </Router>
