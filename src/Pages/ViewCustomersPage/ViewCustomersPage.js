@@ -11,7 +11,8 @@ export default function ViewCustomersPage() {
 
     const fetchP = async () => {
         try {
-            const res = await apiCaller('Users ', 'GET', null);
+            let token = localStorage.getItem('tokenApp');
+            const res = await apiCaller('Users ', 'GET', null,token);
             // console.log(res.data);
             dispatch({ type: 'FETCH_USERS', customers: res.data })
         } catch (err) {
@@ -21,7 +22,6 @@ export default function ViewCustomersPage() {
     useEffect(() => {
         fetchP()
     }, [])
-    console.log(customers);
     const showCustomer = () => {
         let result = null
         if (customers.length > 0) {

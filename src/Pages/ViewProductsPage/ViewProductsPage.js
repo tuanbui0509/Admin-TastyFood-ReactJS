@@ -11,7 +11,8 @@ export default function ViewProductsPage() {
 
     const fetchP = async () => {
         try {
-            const res = await apiCaller('Products/products', 'GET', null);
+            let token = localStorage.getItem('tokenApp');
+            const res = await apiCaller('Products/products', 'GET', null,token);
             // console.log(res.data);
             dispatch({ type: 'FETCH_PRODUCTS', products: res.data })
         } catch (err) {
@@ -21,7 +22,6 @@ export default function ViewProductsPage() {
     useEffect(() => {
         fetchP()
     }, [])
-    console.log(products);
     const showProduct = () => {
         let result = null
         if (products.length > 0) {

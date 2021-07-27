@@ -11,7 +11,9 @@ export default function ViewOrdersPage() {
 
     const fetchP = async () => {
         try {
-            const res = await apiCaller('Orders', 'GET', null);
+            let token = localStorage.getItem('tokenApp');
+            // console.log(token);
+            const res = await apiCaller('Orders', 'GET', null, token);
             // console.log(res.data);
             dispatch({ type: 'FETCH_ORDERS', orders: res.data })
         } catch (err) {
@@ -21,7 +23,6 @@ export default function ViewOrdersPage() {
     useEffect(() => {
         fetchP()
     }, [])
-    console.log(orders);
     const showOrder = () => {
         let result = null
         if (orders.length > 0) {
@@ -31,6 +32,7 @@ export default function ViewOrdersPage() {
                         key={index}
                         order={order}
                         index={index}
+                        onCheckout={index}
                     />
                 )
             })

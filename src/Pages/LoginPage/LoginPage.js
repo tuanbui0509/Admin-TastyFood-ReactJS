@@ -1,19 +1,16 @@
-import React, { useState } from 'react'
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import { UseState } from 'react-redux'
-
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import apiCaller from '../../Utils/apiCaller';
+import {useHistory} from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -35,15 +32,47 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 export default function LoginPage() {
+
     const [formData, setFormData] = useState({
         userName: '',
         password: ''
     })
-
+    const isToken = useSelector(state => state.isToken)
+    const dispatch = useDispatch()
+    const history = useHistory()
     const classes = useStyles();
-    function onHandleSubmit(e) {
+    // const fetchP = async () => {
+    //     try {
+    //         const res = await apiCaller('Products/products', 'POST', null);
+    //         // console.log(res.data);
+    //         dispatch({ type: 'LOGIN_ACCOUNT', account: res.data })
+    //     } catch (err) {
+
+    //     }
+    // }
+    // useEffect(() => {
+    //     fetchP()
+    // }, [])
+    async function onHandleSubmit(e) {
         e.preventDefault();
         console.log(formData);
+        try {
+            const res = await apiCaller('Users/authenticate', 'POST', formData);
+            console.log(res);
+            if(res.status === 200) {
+                localStorage.setItem('tokenApp', res.data.resultObj)
+                dispatch({ type:'ISTOKEN'})
+                history.push('/');
+            }
+            else{
+
+            }
+        }
+        catch (err) {
+
+        }
+        // dispatch({ type: 'LOGIN_ACCOUNT', account: res.data })
+        // console.log(account);
     } return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -61,7 +90,7 @@ export default function LoginPage() {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label="Username"
                         name="email"
                         autoComplete="email"
                         autoFocus

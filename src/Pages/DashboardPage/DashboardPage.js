@@ -1,29 +1,63 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
 import OrderItem from '../../Components/OrderItem/OrderItem'
-import OrderList from '../../Components/OrderList/OrderList'
 import apiCaller from '../../Utils/apiCaller'
 
 function DashboardPage(props) {
     const orders = useSelector(state => state.orders)
+    const categories = useSelector(state => state.categories)
+    const products = useSelector(state => state.products)
+    const customers = useSelector(state => state.customers)
     const dispatch = useDispatch()
     const history = useHistory();
 
-    const fetchP = async () => {
+    const fetchO = async () => {
         try {
-            const res = await apiCaller('Orders', 'GET', null);
+            let token = localStorage.getItem('tokenApp');
+            const res = await apiCaller('Orders', 'GET', null, token);
             // console.log(res.data);
             dispatch({ type: 'FETCH_ORDERS', orders: res.data })
         } catch (err) {
 
         }
     }
+    const fetchP = async () => {
+        try {
+            let token = localStorage.getItem('tokenApp');
+            const res = await apiCaller('Products/products', 'GET', null, token);
+            // console.log(res.data);
+            dispatch({ type: 'FETCH_PRODUCTS', products: res.data })
+        } catch (err) {
+
+        }
+    }
+    const fetchC = async () => {
+        try {
+            let token = localStorage.getItem('tokenApp');
+            const res = await apiCaller('Users', 'GET', null, token);
+            // console.log(res.data);
+            dispatch({ type: 'FETCH_USERS', customers: res.data })
+        } catch (err) {
+
+        }
+    }
+    const fetchA = async () => {
+        try {
+            let token = localStorage.getItem('tokenApp');
+            const res = await apiCaller('Categories', 'GET', null, token);
+            // console.log(res.data);
+            dispatch({ type: 'FETCH_CATEGORIES', categories: res.data })
+        } catch (err) {
+
+        }
+    }
     useEffect(() => {
+        fetchO()
         fetchP()
+        fetchA()
+        fetchC()
     }, [])
-    console.log(orders);
     const showOrder = () => {
         let result = null
         if (orders.length > 0) {
@@ -34,7 +68,7 @@ function DashboardPage(props) {
                         order={order}
                         index={index}
                     />
-                ): null
+                ) : null
             })
         }
         return result
@@ -46,22 +80,22 @@ function DashboardPage(props) {
             <div className="right__cards">
                 <Link className="right__card" to="/admin/view-products">
                     <div className="right__cardTitle">Sản Phẩm</div>
-                    <div className="right__cardNumber">72</div>
+                    <div className="right__cardNumber">{products.length}</div>
                     <div className="right__cardDesc">Xem Chi Tiết <img src="/assets/arrow-right.svg" alt='' /></div>
                 </Link>
                 <Link className="right__card" to="/admin/view-customers">
                     <div className="right__cardTitle">Khách Hàng</div>
-                    <div className="right__cardNumber">12</div>
+                    <div className="right__cardNumber">{customers.length}</div>
                     <div className="right__cardDesc">Xem Chi Tiết <img src="/assets/arrow-right.svg" alt='' /></div>
                 </Link>
                 <Link className="right__card" to="/admin/view-categories">
                     <div className="right__cardTitle">Danh Mục</div>
-                    <div className="right__cardNumber">4</div>
+                    <div className="right__cardNumber">{categories.length}</div>
                     <div className="right__cardDesc">Xem Chi Tiết <img src="/assets/arrow-right.svg" alt='' /></div>
                 </Link>
                 <Link className="right__card" to="/admin/view-orders">
                     <div className="right__cardTitle">Đơn Hàng</div>
-                    <div className="right__cardNumber">72</div>
+                    <div className="right__cardNumber">{orders.length}</div>
                     <div className="right__cardDesc">Xem Chi Tiết <img src="/assets/arrow-right.svg" alt='' /></div>
                 </Link>
             </div>

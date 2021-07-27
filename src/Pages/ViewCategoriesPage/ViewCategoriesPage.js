@@ -21,7 +21,6 @@ export default function ViewCategoriesPage() {
     useEffect(() => {
         fetchP()
     }, [])
-    console.log(categories);
     const showCategory = () => {
         let result = null
         if (categories.length > 0) {
