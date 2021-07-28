@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import apiCaller from '../../Utils/apiCaller';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -41,38 +41,25 @@ export default function LoginPage() {
     const dispatch = useDispatch()
     const history = useHistory()
     const classes = useStyles();
-    // const fetchP = async () => {
-    //     try {
-    //         const res = await apiCaller('Products/products', 'POST', null);
-    //         // console.log(res.data);
-    //         dispatch({ type: 'LOGIN_ACCOUNT', account: res.data })
-    //     } catch (err) {
-
-    //     }
-    // }
-    // useEffect(() => {
-    //     fetchP()
-    // }, [])
     async function onHandleSubmit(e) {
         e.preventDefault();
         console.log(formData);
         try {
             const res = await apiCaller('Users/authenticate', 'POST', formData);
-            console.log(res);
-            if(res.status === 200) {
+            console.log(res.data.roles.indexOf('admin'));
+            if (res.status === 200 && res.data.roles.indexOf('admin') >= 0) {
                 localStorage.setItem('tokenApp', res.data.resultObj)
-                dispatch({ type:'ISTOKEN'})
+                dispatch({ type: 'ISTOKEN' })
+                alert('Đăng nhập thành công')
                 history.push('/');
             }
-            else{
-
+            else {
+                alert('Đăng nhập không thành công')
             }
         }
         catch (err) {
-
+            alert('Đăng nhập không thành công')
         }
-        // dispatch({ type: 'LOGIN_ACCOUNT', account: res.data })
-        // console.log(account);
     } return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -120,7 +107,6 @@ export default function LoginPage() {
                     >
                         Sign In
                     </Button>
-
                 </form>
             </div>
             <Box mt={8}>

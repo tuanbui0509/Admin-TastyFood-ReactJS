@@ -12,8 +12,9 @@ function App() {
     <Router>
       <div className="wrapper">
         <div className="container">
-
-          {token ?
+          {!token
+            ? <Route to="/admin/login" from='/' exact component={LoginPage} >
+            </Route> :
             <div className="dashboard">
               <MenuSidebar />
               <div className="right">
@@ -24,8 +25,6 @@ function App() {
                 </div>
               </div>
             </div>
-            : <Route path="/admin/login" exact component={LoginPage} >
-            </Route>
           }
 
         </div>

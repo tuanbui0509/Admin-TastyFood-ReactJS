@@ -13,7 +13,6 @@ function OrderItem(props) {
             <td data-label="Ngày">{order.orderDate}</td>
             {/* <td data-label="Ngày">{order.shipPhoneNumber}</td> */}
             <td data-label="Trạng thái">{order.status === 0 ? 'Đang Chờ Xử Lý' : 'Đã xác nhận'} </td>
-            <td data-label="Xoá" className="right__iconTable"><a href><img src="/assets/icon-trash-black.svg" alt='' /></a></td>
             {order.status ===0?
             <td data-label="Thanh toán" className="right__confirm">
                 <Link to="/" className="right__iconTable"><img src="/assets/icon-check.svg" alt='' /></Link>

@@ -15,7 +15,7 @@ function CustomerList(props) {
                                 <th>Tên</th>
                                 <th>Email</th>
                                 <th>Phone</th>
-                                <th>Vai trò</th>
+                                <th>Ngày sinh</th>
                                 <th>Xoá</th>
                             </tr>
                         </thead>

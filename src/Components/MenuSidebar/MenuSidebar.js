@@ -12,35 +12,37 @@ const menus = [
         label: 'Sản phẩm',
         to: '/admin/view-products',
         exact: false,
-        submenu: [
-            {
-                label: "Chèn sản phẩm",
-                to: '/admin/insert-product',
-                exact: false
-            },
-            {
-                label: "Xem sản phẩm",
-                to: '/admin/view-products',
-                exact: false
-            }
-        ]
+        submenu: []
+        // submenu: [
+        //     {
+        //         label: "Chèn sản phẩm",
+        //         to: '/admin/insert-product',
+        //         exact: false
+        //     },
+        //     {
+        //         label: "Xem sản phẩm",
+        //         to: '/admin/view-products',
+        //         exact: false
+        //     }
+        // ]
     },
     {
         label: 'Danh mục sản phẩm',
-        to: '/admin/view-',
+        to: '/admin/view-categories',
         exact: false,
-        submenu: [
-            {
-                label: "Chèn danh mục",
-                to: '/admin/insert-product',
-                exact: false
-            },
-            {
-                label: "Xem danh mục",
-                to: '/admin/view-products',
-                exact: false
-            }
-        ]
+        submenu: []
+        // submenu: [
+        //     {
+        //         label: "Chèn danh mục",
+        //         to: '/admin/insert-product',
+        //         exact: false
+        //     },
+        //     {
+        //         label: "Xem danh mục",
+        //         to: '/admin/view-products',
+        //         exact: false
+        //     }
+        // ]
     },
     // {
     //     label: 'Coupons',
@@ -172,8 +174,8 @@ export default function MenuSidebar() {
             </span>
             <div className="left__content">
                 <div className="left__profile">
-                    <div className="left__image"><img src="/assets/profile1.jpg" alt='' /></div>
-                    <p className="left__name">Bùi Ngọc Tuấn</p>
+                    <div className="left__image"><img src="/assets/admin.png" alt='' /></div>
+                    <p className="left__name">Admin</p>
                 </div>
                 <ul className="left__menu">
                     {showMenus(menus)}

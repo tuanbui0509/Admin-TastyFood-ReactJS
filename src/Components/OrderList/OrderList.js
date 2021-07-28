@@ -16,9 +16,7 @@ function OrderList(props) {
                                 <th>Tên người mua</th>
                                 <th>Địa chỉ</th>
                                 <th>Ngày Đặt</th>
-                                {/* <th>Số điện thoại</th> */}
                                 <th>Trạng thái</th>
-                                <th>Xoá</th>
                                 <th>Thanh toán</th>
                             </tr>
                         </thead>
